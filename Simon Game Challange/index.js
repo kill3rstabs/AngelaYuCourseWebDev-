@@ -25,6 +25,7 @@ const playSound = (name) => {
 };
 
 const userPlay = () => {
+  console.log(level);
   console.log('Entered user play');
   $('.btn').click(function () {
     var userChosenColour = $(this).attr("id");
@@ -59,10 +60,12 @@ const startOver = () => {
   level = 0;
   gamePattern = [];
   gameNotOver = true;
-  
+
 };
 
 const checkAnswer = (currentLevel) => {
+
+  console.log(currentLevel)
   if (userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
     if (userClickedPattern.length === gamePattern.length) {
       setTimeout(() => {
@@ -75,23 +78,17 @@ const checkAnswer = (currentLevel) => {
     level = 0;
     $('#level-title').text("Game over, Press Any Key to start again!");
     startOver();
-    gameStart();
+    // gameStart();
   }
 };
+$(document).keypress((event) => {
+  if (!gameNotOver) {
+    return;
+  }
 
-const gameStart = ()=>{
-  $(document).keypress((event) => {
-    // if (!gameNotOver) {
-    //   return;
-    // }
-  
-    if (event.key === 'a' || event.key === 'A') {
-      
-        genSeq();
-      
-  
-      userPlay();
-    }
-  });
-}
-gameStart();
+  if (event.key === 'a' || event.key === 'A') {
+
+    genSeq();
+    userPlay();
+  }
+});
